@@ -1,5 +1,6 @@
 #include "myBank.h"
 #include <stdio.h>
+#include <stdbool.h>
 
 #define NUM_OF_ACCOUNTS 50
 
@@ -26,59 +27,69 @@ void newAccount()
             }
             
         }
-    }else
-    {
-        printf("no room to insert more accounts\n");
-    }
-    
+    }else printf("no room to insert more accounts\n");
 }
 
 void accountStatus(float accountNumber){
+    bool flag1 = true;
     for (int i = 0; i < NUM_OF_ACCOUNTS; i++){
         if(accounts[i][0] == accountNumber){//Entering if the account number was found
             if(accounts[i][1] == 0){
                 printf("The account is not Active\n");
+                flag1 = false;
             }
             if(accounts[i][1] == 1){
                 printf("The Balance of the account is : %.2f\n",accounts[i][2]);
+                flag1 = false;
             }
             break;
         }
+    
+         
     }
-    printf("there is no account with this number\n");
+    if(flag1)
+        printf("THERE IS NO ACCOUNT WITH THIS NUMBER\n\n");
+    
 
 }
 
 void deposit(float accountNumber){
+    bool flag1 = true;
     float deposit;
     for (int i = 0; i < NUM_OF_ACCOUNTS; i++){
         if(accounts[i][0] == accountNumber){//looking for the account
             if(accounts[i][1] == 0){
                 printf("The account is not Active\n");
+                flag1 = false;
             }
             if(accounts[i][1] == 1){
                 printf("Please enter how much to deposit :\n");
                 scanf("%f%*c",&deposit);
                 accounts[i][2] += deposit;
+                flag1 = false;
 
             }
             break;//break when the account was found
         }
     }
-    printf("there is no account with this number\n");
+    if (flag1)
+        printf("THERE IS NO ACCOUNT WITH THIS NUMBER\n\n");
 
 }
 
 void withdraw(float accountNumber){
+    bool flag1 = true;
     float withdraw;
     for (int i = 0; i < NUM_OF_ACCOUNTS; i++){
         if(accounts[i][0] == accountNumber){
             if(accounts[i][1] == 0){
                 printf("The account is not Active\n");
+                flag1 = false;
             }
             if(accounts[i][1] == 1){
-                printf("Please enter how much to deposit :\n");
+                printf("Please enter how much to withdraw :\n");
                 scanf("%f%*c",&withdraw);
+                flag1 = false;
                 accounts[i][2] -= withdraw;
 
             }
@@ -86,14 +97,17 @@ void withdraw(float accountNumber){
         }
         
     }
-    printf("there is no account with this number\n");
+    if (flag1)
+        printf("THERE IS NO ACCOUNT WITH THIS NUMBER\n\n");
 }
 
 void closeAccount(float accountNumber){
+    bool flag1 = true;
     for (int i = 0; i < NUM_OF_ACCOUNTS; i++){
         if(accounts[i][0] == accountNumber){
             if(accounts[i][1] == 0){
                 printf("The account is not Active\n");
+                flag1 = false;
             }
             if(accounts[i][1] == 1)
             {
@@ -101,16 +115,20 @@ void closeAccount(float accountNumber){
                     printf("Your account number : %.0f is in debt! you cant close this account, please deposit tha money that you owe us !\n",accounts[i][0]);
                     break;
                 }
-                //case that every thing id fine
+                //case that every thing is fine
                 accounts[i][1] = 0;
                 accounts[i][2] = 0;
                 printf("The account number : %.0f has been closed!\n",accounts[i][0]);
+                flag1 = false;
 
             }
             break;
         }
         
-    }    
+    }
+    if(flag1)
+        printf("THERE IS NO ACCOUNT WITH THIS NUMBER\n\n");
+         
 }
 
 void interestRate(float interest_rate){
